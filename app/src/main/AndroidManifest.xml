@@ -13,6 +13,17 @@
         android:theme="@style/Theme.LuxeVistaResortFinal"
         tools:targetApi="31">
         <activity
+            android:name=".AddRoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewRoomsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_view_rooms"
+            android:theme="@style/Theme.LuxeVistaResortFinal" />
+        <activity
+            android:name=".BookingConfirmationActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity

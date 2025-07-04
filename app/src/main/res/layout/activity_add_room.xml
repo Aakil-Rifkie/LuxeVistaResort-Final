@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/innerpgbg"
+    android:gravity="center_vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add New Room"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="24dp" />
+
+    <EditText
+        android:id="@+id/roomNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name of Room"
+        android:textSize="20sp"
+        android:textColorHint="@color/black"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/descriptionInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description (e.g Ocean View)"
+        android:textSize="20sp"
+        android:textColorHint="@color/black"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/priceInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Price per Night"
+        android:textSize="20sp"
+        android:textColorHint="@color/black"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/submitRoomBTN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Room"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="42dp"
+        />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:text="Back"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/background"
+        android:padding="8dp"
+        android:layout_margin="8dp" />
+
+</LinearLayout>

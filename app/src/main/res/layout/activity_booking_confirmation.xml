@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#FAF6E9">
+
+    <TextView
+        android:id="@+id/roomNameConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Room Name"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:id="@+id/roomDescriptionConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Room Description"
+        android:textSize="20sp"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:id="@+id/roomPriceConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price: $0.00"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Select Check-in Date:" />
+
+    <EditText
+        android:id="@+id/checkInDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="YYYY-MM-DD"
+        android:minHeight="48dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Select Check-out Date:" />
+
+    <EditText
+        android:id="@+id/checkOutDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:hint="YYYY-MM-DD"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/confirmBookingButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirm Booking"
+        android:backgroundTint="@color/background"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:text="Back"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/background"
+        android:padding="8dp"
+        android:layout_margin="8dp" />
+
+
+</LinearLayout>

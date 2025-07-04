@@ -35,7 +35,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ROLE + " TEXT"
                 + ")";
         db.execSQL(CREATE_USERS_TABLE);
+
+        String CREATE_ROOMS_TABLE = "CREATE TABLE rooms (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "room_name TEXT," +
+                "description TEXT," +
+                "price REAL" +
+                ")";
+        db.execSQL(CREATE_ROOMS_TABLE);
+
+        String CREATE_BOOKINGS_TABLE = "CREATE TABLE bookings (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "room_id INTEGER," +
+                "user_id INTEGER," +
+                "check_in TEXT," +
+                "check_out TEXT," +
+                "FOREIGN KEY (room_id) REFERENCES rooms(id)," +
+                "FOREIGN KEY (user_id) REFERENCES users(id)" +
+                ")";
+        db.execSQL(CREATE_BOOKINGS_TABLE);
+
+        String CREATE_SERVICES_TABLE = "CREATE TABLE services (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "service_name TEXT," +
+                "description TEXT," +
+                "price REAL" +
+                ")";
+        db.execSQL(CREATE_SERVICES_TABLE);
+
     }
+
+
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
@@ -88,4 +118,72 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return null;
     }
+
+    public boolean insertRoom(String roomName, String description, double price){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("room_name", roomName);
+        values.put("description", description);
+        values.put("price", price);
+
+        long result = db.insert("rooms", null, values);
+        db.close();
+        return result != -1;
+    }
+
+    public Cursor getAllRooms() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM rooms", null);
+    }
+
+    public boolean isRoomAvailable(int roomId, String checkIn, String checkOut) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM bookings WHERE room_id = ? AND (" +
+                "(date(check_in) <= date(?) AND date(check_out) >= date(?)) OR " +
+                "(date(check_in) <= date(?) AND date(check_out) >= date(?)) OR " +
+                "(date(?) <= date(check_in) AND date(?) >= date(check_out))" +
+                ")";
+        Cursor cursor = db.rawQuery(query, new String[]{
+                String.valueOf(roomId),
+                checkOut, checkIn,
+                checkOut, checkIn,
+                checkIn, checkOut
+        });
+
+        boolean available = !cursor.moveToFirst();
+        cursor.close();
+        return available;
+    }
+
+    public boolean addBooking(int roomId, int userId, String checkIn, String checkOut) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("room_id", roomId);
+        values.put("user_id", userId);
+        values.put("check_in", checkIn);
+        values.put("check_out", checkOut);
+
+        long result = db.insert("bookings", null, values);
+        db.close();
+        return result != -1;
+    }
+
+    public Cursor getUserByEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_USERS, null, "email = ?", new String[]{email}, null, null, null);
+    }
+
+    public int getUserIdByEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USERS, new String[]{COLUMN_ID}, COLUMN_EMAIL + "=?", new String[]{email}, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int userId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
+            cursor.close();
+            return userId;
+        }
+        return -1;
+    }
+
 }
