@@ -141,6 +141,19 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:text="Log out"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/background"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp" />
+
+
 
 
 

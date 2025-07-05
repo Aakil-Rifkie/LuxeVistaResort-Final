@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "LuxeVista Resort";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_USERS = "users";
     private static final String COLUMN_ID = "id";
@@ -87,8 +87,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS rooms");
+        db.execSQL("DROP TABLE IF EXISTS bookings");
+        db.execSQL("DROP TABLE IF EXISTS services");
+        db.execSQL("DROP TABLE IF EXISTS service_bookings");
+        onCreate(db);
     }
 
     public boolean addUser(String email, String password, String username, int age) {
@@ -231,6 +237,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert("service_bookings", null, values);
         db.close();
         return result != -1;
+    }
+
+    public boolean updateUserProfile(String email, String preferredRoom, String preferredService, String startDate, String endDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("preferred_room", preferredRoom);
+        values.put("preferred_service", preferredService);
+        values.put("travel_start_date", startDate);
+        values.put("travel_end_date", endDate);
+
+        int result = db.update("users", values, "email = ?", new String[]{email});
+        db.close();
+        return result > 0;
+    }
+
+
+    public ArrayList<String> getUserBookingHistory(int userId) {
+        ArrayList<String> history = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor roomCursor = db.rawQuery(
+                "SELECT * FROM bookings INNER JOIN rooms ON bookings.room_id = rooms.id WHERE bookings.user_id = ?",
+                new String[]{String.valueOf(userId)});
+
+        while (roomCursor.moveToNext()) {
+            String roomName = roomCursor.getString(roomCursor.getColumnIndexOrThrow("room_name"));
+            String checkIn = roomCursor.getString(roomCursor.getColumnIndexOrThrow("check_in"));
+            String checkOut = roomCursor.getString(roomCursor.getColumnIndexOrThrow("check_out"));
+            history.add("Room: " + roomName + "\nCheck-in: " + checkIn + "\nCheck-out: " + checkOut);
+        }
+        roomCursor.close();
+
+        Cursor serviceCursor = db.rawQuery(
+                "SELECT * FROM service_bookings INNER JOIN services ON service_bookings.service_id = services.id WHERE service_bookings.user_id = ?",
+                new String[]{String.valueOf(userId)});
+
+        while (serviceCursor.moveToNext()) {
+            String serviceName = serviceCursor.getString(serviceCursor.getColumnIndexOrThrow("service_name"));
+            String date = serviceCursor.getString(serviceCursor.getColumnIndexOrThrow("date"));
+            history.add("Service: " + serviceName + "\nDate: " + date);
+        }
+        serviceCursor.close();
+
+        return history;
     }
 
 

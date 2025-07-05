@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class UserMainActivity extends AppCompatActivity {
 
-    Button AddRoomBTN, bookRoomBTN, reserveServiceButton, addServiceButton, viewProfileButton, viewAttractionsButton;
+    Button AddRoomBTN, bookRoomBTN, reserveServiceButton, addServiceButton, viewProfileButton, viewAttractionsButton, logoutButton;
     String email;
     ;
 
@@ -24,6 +24,7 @@ public class UserMainActivity extends AppCompatActivity {
         addServiceButton = findViewById(R.id.btnAddServices);
         viewProfileButton = findViewById(R.id.btnProfile);
         viewAttractionsButton = findViewById(R.id.btnAttractions);
+        logoutButton = findViewById(R.id.logoutButton);
 
         email = getIntent().getStringExtra("user_email");
 
@@ -68,5 +69,13 @@ public class UserMainActivity extends AppCompatActivity {
             Intent intent = new Intent(UserMainActivity.this, HotelInfoActivity.class);
             startActivity(intent);
         });
+
+        logoutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(UserMainActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        });
+
     }
 }
