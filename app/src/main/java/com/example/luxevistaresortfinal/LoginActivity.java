@@ -2,6 +2,7 @@ package com.example.luxevistaresortfinal;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
@@ -30,6 +31,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         registerText = findViewById(R.id.registerText);
         dbHelper = new DatabaseHelper(this);
+
+        String styledText = "No account? <font color='#00796B'><b><u>Register here</u></b></font>";
+        registerText.setText(Html.fromHtml(styledText));
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

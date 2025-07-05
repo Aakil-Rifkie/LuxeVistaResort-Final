@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "LuxeVista Resort";
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String TABLE_USERS = "users";
     private static final String COLUMN_ID = "id";
@@ -19,6 +19,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_AGE = "age";
     private static final String COLUMN_ROLE = "role";
+
+    private static final String COLUMN_PREFERRED_ROOM = "preferred_room";
+    private static final String COLUMN_PREFERRED_SERVICE = "preferred_service";
+    private static final String COLUMN_TRAVEL_START_DATE = "travel_start_date";
+    private static final String COLUMN_TRAVEL_END_DATE = "travel_end_date";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -31,9 +37,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_EMAIL + " TEXT,"
                 + COLUMN_PASSWORD + " TEXT,"
                 + COLUMN_USERNAME + " TEXT,"
-                + COLUMN_AGE + " INTEGER,"
-                + COLUMN_ROLE + " TEXT"
-                + ")";
+                + COLUMN_AGE + " INTEGER," +
+                COLUMN_ROLE + " TEXT," +
+                COLUMN_PREFERRED_ROOM + " TEXT," +
+                COLUMN_PREFERRED_SERVICE + " TEXT," +
+                COLUMN_TRAVEL_START_DATE + " TEXT," +
+                COLUMN_TRAVEL_END_DATE + " TEXT" +
+                ")";
         db.execSQL(CREATE_USERS_TABLE);
 
         String CREATE_ROOMS_TABLE = "CREATE TABLE rooms (" +
@@ -62,6 +72,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "price REAL" +
                 ")";
         db.execSQL(CREATE_SERVICES_TABLE);
+
+        String CREATE_SERVICE_BOOKINGS_TABLE = "CREATE TABLE service_bookings (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "service_id INTEGER," +
+                "user_id INTEGER," +
+                "date TEXT," +
+                "FOREIGN KEY (service_id) REFERENCES services(id)," +
+                "FOREIGN KEY (user_id) REFERENCES users(id)" +
+                ")";
+        db.execSQL(CREATE_SERVICE_BOOKINGS_TABLE);
 
     }
 
@@ -185,5 +205,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return -1;
     }
+
+    public Cursor getAllServices() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM services", null);
+    }
+
+    public boolean isServiceAvailable(int serviceId, String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM service_bookings WHERE service_id = ? AND date = ?",
+                new String[]{String.valueOf(serviceId), date});
+
+        boolean available = !cursor.moveToFirst();
+        cursor.close();
+        return available;
+    }
+
+    public boolean addServiceBooking(int serviceId, int userId, String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("service_id", serviceId);
+        values.put("user_id", userId);
+        values.put("date", date);
+
+        long result = db.insert("service_bookings", null, values);
+        db.close();
+        return result != -1;
+    }
+
 
 }

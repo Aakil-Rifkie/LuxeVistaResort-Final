@@ -12,6 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LuxeVistaResortFinal"
         tools:targetApi="31">
+
+        <activity
+            android:name=".HotelInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewServicesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".AddRoomActivity"
             android:exported="false" />
@@ -30,10 +43,10 @@
             android:name=".UserMainActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

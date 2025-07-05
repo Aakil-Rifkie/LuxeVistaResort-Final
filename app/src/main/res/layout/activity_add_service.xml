@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="24dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/innerpgbg"
+    android:gravity="center">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Services"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="24dp" />
+
+
+    <EditText
+        android:id="@+id/serviceNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:textSize="20sp"
+        android:textColorHint="@color/black"
+        android:hint="Service Name"
+        android:minHeight="48dp" />
+
+
+    <EditText
+        android:id="@+id/serviceDescriptionInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description"
+        android:textSize="20sp"
+        android:textColorHint="@color/black"
+        android:layout_marginBottom="24dp" />
+
+    <EditText
+        android:id="@+id/servicePriceInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Price"
+        android:textSize="20sp"
+        android:textColorHint="@color/black"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="24dp" />
+
+
+    <Button
+        android:id="@+id/submitServiceBTN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Room"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="42dp"
+        />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:text="Back"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/background"
+        android:padding="8dp"
+        android:layout_margin="8dp" />
+</LinearLayout>

@@ -3,6 +3,7 @@ package com.example.luxevistaresortfinal;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
@@ -32,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.registerButton);
         loginText = findViewById(R.id.loginText);
 
+        String styledText = "No account? <font color='#00796B'><b><u>Register here</u></b></font>";
+        loginText.setText(Html.fromHtml(styledText));
 
         dbHelper = new DatabaseHelper(this);
 
